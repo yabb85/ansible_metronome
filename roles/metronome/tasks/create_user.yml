@@ -1,0 +1,2 @@
+- name: create user metronome
+  user: name=metronome createhome=no

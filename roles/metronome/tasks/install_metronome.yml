@@ -1,0 +1,27 @@
+- name: update repository on jessie
+  apt_repository: repo='deb http://packages.prosody.im/debian jessie main' state=present
+  when: ansible_distribution == "Debian" and ansible_distribution_release == "jessie"
+- name: update repositry on wheezy
+  apt_repository: repo='deb http://packages.prosody.im/debian wheezy main' state=present
+  when: ansible_distribution == "Debian" and ansible_distribution_release == "wheezy"
+- name: update public key
+  apt_key: url='http://prosody.im/files/prosody-debian-packages.key' state=present
+- name: install dependencies
+  apt: name={{ item }} state=present
+  with_items: dependencies
+- name: clone source
+  git: repo='https://github.com/maranda/metronome.git' dest='/opt/metronome'
+- name: configure metronome
+  shell: ./configure --ostype=debian
+  args:
+    chdir: /opt/metronome
+- name: compile metronome
+  shell: make clean; make
+  args:
+    chdir: /opt/metronome
+- name: install metronome
+  shell: make install
+  args:
+    chdir: /opt/metronome
+- name: set init
+  template: src=metronome.service dest=/etc/systemd/system/metronome.service

@@ -1,0 +1,10 @@
+dependencies:
+  - lua5.1
+  - liblua5.1-0-dev
+  - libidn11-dev
+  - libssl-dev
+  - lua-zlib
+  - lua-expat
+  - lua-event
+  - lua-bitop
+  - lua-sec

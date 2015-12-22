@@ -1,0 +1,14 @@
+[Unit]
+Description=Metronome Jabber/XMPP Server
+
+[Service]
+User=metronome
+ProtectSystem=full
+ProtectHome=true
+Type=notify
+Restart=always
+ExecStart=/usr/local/bin/metronomectl start -a metronome
+ExecStop=/usr/local/bin/metronomectl stop metronome
+
+[Install]
+WantedBy=multi-user.target

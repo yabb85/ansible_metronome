@@ -1,0 +1,5 @@
+- name: configure metronome
+  hosts: local
+  remote_user: root
+  roles:
+    - metronome
