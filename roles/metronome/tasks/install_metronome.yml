@@ -12,16 +12,10 @@
 - name: clone source
   git: repo='https://github.com/maranda/metronome.git' dest='/opt/metronome'
 - name: configure metronome
-  shell: ./configure --ostype=debian
-  args:
-    chdir: /opt/metronome
-- name: compile metronome
-  shell: make clean; make
-  args:
-    chdir: /opt/metronome
-- name: install metronome
-  shell: make install
-  args:
-    chdir: /opt/metronome
+  shell: "{{ item }} chdir=/opt/metronome"
+  with_items:
+    - ./configure --ostype=debian
+    - make clean; make
+    - make install
 - name: set init
   template: src=metronome.service dest=/etc/systemd/system/metronome.service
